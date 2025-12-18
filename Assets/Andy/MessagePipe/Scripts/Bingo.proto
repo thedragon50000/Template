@@ -1,0 +1,33 @@
+// 檔名: Bingo.proto
+syntax = "proto3";
+// C# 命名空間：請確保這個名稱與您在 Unity 專案中的習慣一致
+option csharp_namespace = "Game.Protocol.Bingo";
+
+// ===================================
+// 訊息定義：5x5 賓果盤面
+// ===================================
+message BingoBoard {
+  // 欄位 1: 盤面上的 25 個數字 (從 1 到 25)
+  // repeated 代表這是一個列表或陣列
+  repeated int32 board_numbers = 1;
+
+  // 欄位 2: 標記狀態（與數字一一對應）
+  // true: 已標記 (打勾)，false: 未標記
+  repeated bool is_marked = 2;
+
+  // 欄位 3: 盤面擁有者的唯一 ID
+  // 前綴 optional，代表不給值它就會是null，否則 protobuf都會把變數初始化而得到值
+  optional string player_id = 3;
+}
+
+// ===================================
+// 範例：客戶端發送 - 呼叫一個數字
+// ===================================
+message C2S_CallNumber {
+  // 欄位 1: 發送指令的玩家 ID
+  string player_id = 1;
+  // 欄位 2: 呼叫的數字
+  int32 called_number = 2;
+}
+
+// cmd  protoc --csharp_out=. Bingo.proto

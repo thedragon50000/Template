@@ -1,0 +1,3 @@
+從 firstScene 輸入 HP值 傳送到NextScene
+兩個Scene都要加入ProjectSettings
+HP值包在CharacterStats裡，別Bind太簡單的變數，會需要很多Id，很麻煩
