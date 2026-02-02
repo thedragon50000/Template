@@ -18,7 +18,7 @@ namespace Andy.Zenject_LoadScene1.Scripts
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    Debug.Log("毀了飛機！");
+                    Debug.Log("毀了鎖頭！");
 
                     plane.SetActive(false);
                 }
