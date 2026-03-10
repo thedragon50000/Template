@@ -19,15 +19,19 @@ public class UniTasksSample : MonoBehaviour
     public float f = 0;
 
     // ReSharper disable once Unity.IncorrectMethodSignature
-    private async UniTaskVoid Awake()
+    private void Awake()
     {
-        btn.onClick.AddListener(async () =>
+        btn.onClick.AddListener(() =>
         {
-            TempVoid().Forget();
-            await TempVoid();
-            print("C");
+            // 直接呼叫一個 async 方法而不等待它，這是合法的
+            DoSomethingAsync().Forget();
         });
-        
+    }
+
+    private async UniTaskVoid DoSomethingAsync()
+    {
+        await TempVoid();
+        print("C");
     }
 
     // Note: UniTaskVoid 只管觸發不能await，適用於按鈕
@@ -38,8 +42,8 @@ public class UniTasksSample : MonoBehaviour
         print("B");
         await UniTask.DelayFrame(100);
     }
-    
-    async UniTaskVoid Start()
+
+    void Start()
     {
         _gameObjects = new ObservableCollection<GameObject>();
 
@@ -49,6 +53,11 @@ public class UniTasksSample : MonoBehaviour
 
         // Test();
         // Test2();
+        NewMethod().Forget();
+    }
+
+    private async UniTaskVoid NewMethod()
+    {
         await UniTask.Delay(100);
         Test3();
     }
@@ -78,14 +87,14 @@ public class UniTasksSample : MonoBehaviour
         _gameObjects.Clear();
     }
 
-    private async void Test2()
-    {
-        // f = await GetScoreAsync();
-        // f += await GetScoreAsync();
-        // f += await GetScoreAsync();
-        // f += await GetScoreAsync();
-        print("數學算完了");
-    }
+    // private async void Test2()
+    // {
+    //     // f = await GetScoreAsync();
+    //     // f += await GetScoreAsync();
+    //     // f += await GetScoreAsync();
+    //     // f += await GetScoreAsync();
+    //     print("數學算完了");
+    // }
 
     private async void Test3()
     {

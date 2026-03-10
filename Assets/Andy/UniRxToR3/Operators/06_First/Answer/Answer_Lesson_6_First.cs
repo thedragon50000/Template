@@ -3,7 +3,6 @@ using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using R3;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
 namespace UniRxWorkBook.Operators

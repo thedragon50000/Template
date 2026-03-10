@@ -20,5 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Andy/Zenject LoadScene1/Scenes/LastScene.unity
     guid: c7e73199b169c1a45a1f32a05f955e5a
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3c8cb897c29c35946855550ca176a49b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -48,7 +48,7 @@ namespace UniRx.Examples
                     toDos.Add(item);
                 });
 
-            toDos.CollectionChanged += async (sender, e) => { await OnChanged(e); };
+            toDos.CollectionChanged += (sender, e) => { OnChanged(e); };
             // Collection Change Handling
             // toDos.ObserveCountChanged().Subscribe(x => Title.text = "TODO App, ItemCount:" + x);
             // toDos.ObserveAdd().Subscribe(x => { x.Value.transform.SetParent(TodoList.transform, false); });
@@ -66,7 +66,7 @@ namespace UniRx.Examples
                 });
         }
 
-        async Task OnChanged(NotifyCollectionChangedEventArgs e)
+        void OnChanged(NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
