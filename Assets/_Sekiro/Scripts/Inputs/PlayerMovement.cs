@@ -1,3 +1,5 @@
+using System;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,17 +7,60 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public Transform cameraTransform; // 拖入 Main Camera
-    private Vector2 moveInput;
+    private CharacterController _controller;
+    private Vector2 _moveInput;
 
+    private Vector3 _velocity; // 這裡存的是垂直速度
+    private float _gravity = -9.81f; // 自定義重力
+    private float jumpForce = 8;
+
+    // ReactiveProperty<float> atkPoint;
+
+    private IState _currentState;
+
+    void Awake()
+    {
+        _controller = GetComponent<CharacterController>();
+    }
+    void Start()
+    {
+        // 初始狀態為 Idle
+        ChangeState(new IdleState(this));
+    }
+
+    public void ChangeState(IState newState)
+    {
+        _currentState?.Exit();
+        _currentState = newState;
+        _currentState.Enter();
+    }
     public void OnMove(InputAction.CallbackContext ctx) // 接收 Input System 訊號
     {
-        moveInput = ctx.ReadValue<Vector2>();
-        Debug.Log($"axis: {moveInput}");
+        _moveInput = ctx.ReadValue<Vector2>();
+        Debug.Log($"axis: {_moveInput}");
+    }
+
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            _velocity = Vector3.up * jumpForce;
+            ChangeState(new JumpState(this, _velocity));
+            Debug.Log("OnJump");
+        }
     }
 
     void Update()
     {
-        if (moveInput == Vector2.zero) return;
+        _currentState.Update();
+
+        MoveUpdate();
+
+    }
+
+    private void MoveUpdate()
+    {
+        if (_moveInput == Vector2.zero) return;
 
         // 計算相對於攝影機的前後左右
         Vector3 forward = cameraTransform.forward;
@@ -23,10 +68,10 @@ public class PlayerMovement : MonoBehaviour
         forward.y = 0; // 忽略垂直方向
         right.y = 0;
 
-        Vector3 moveDirection = (forward * moveInput.y + right * moveInput.x).normalized;
+        Vector3 moveDirection = (forward * _moveInput.y + right * _moveInput.x).normalized;
 
         // 移動角色
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        _controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         // 角色轉向移動方向
         if (moveDirection != Vector3.zero)

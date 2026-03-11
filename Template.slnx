@@ -62,6 +62,7 @@
   <Project Path="MessagePipe.Zenject.csproj" />
   <Project Path="UniTask.Addressables.csproj" />
   <Project Path="UniTask.Editor.csproj" />
+  <Project Path="SekiroADF.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
   <Project Path="R3.Unity.XRInteractionToolkit.csproj" />
 </Solution>
