@@ -1,7 +1,7 @@
 using UnityEngine;
 using R3;
 using DG.Tweening;
-public class LockQuadPosition : MonoBehaviour
+public class LockCameraPosition : MonoBehaviour
 {
     public Transform player;
     public Transform target;
@@ -26,7 +26,7 @@ public class LockQuadPosition : MonoBehaviour
         Vector3 AB = B - A;
 
         // 2. 旋轉 AB 向量 15 度
-        float y = isInvert ? 15 : -15;
+        float y = isInvert ? -15 : 15;
         Vector3 rotatedVector = Quaternion.Euler(0, y, 0) * AB;
 
         // 3. 縮放長度為原來的 cos(15°) 倍
