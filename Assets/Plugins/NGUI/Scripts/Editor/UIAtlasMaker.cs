@@ -698,7 +698,7 @@ public class UIAtlasMaker : EditorWindow
 	{
 		// Get the texture for the atlas
 		var tex = atlasTexture;
-		var oldPath = (tex != null) ? AssetDatabase.GetAssetPath(tex.GetInstanceID()) : "";
+		var oldPath = (tex != null) ? AssetDatabase.GetAssetPath(tex) : "";
 		var newPath = NGUIEditorTools.GetSaveableTexturePath(atlas as UnityEngine.Object, atlasTexture);
 
 		// Clear the read-only flag in texture file attributes

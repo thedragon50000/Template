@@ -163,7 +163,8 @@ public class NGUISettings
 		{
 			int id;
 			if (int.TryParse(path, out id))
-				return EditorUtility.InstanceIDToObject(id) as T;
+				return EditorUtility.EntityIdToObject(id) as T;
+				// return EditorUtility.InstanceIDToObject(id) as T;
 		}
 		return retVal;
 	}

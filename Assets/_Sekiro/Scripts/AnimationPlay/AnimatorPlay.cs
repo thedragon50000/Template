@@ -37,7 +37,6 @@ public class StateAnimator : MonoBehaviour
             Debug.Log($"{item.nameHash}");
         }
 
-
         var clips = _animator.runtimeAnimatorController.animationClips;
 
         foreach (var clip in clips)
