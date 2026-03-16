@@ -35,7 +35,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f0b44fdb6d6caf6579d932eb3b1f5a106eaca936"
+      "hash": "cb150483894c08cf8a60a209944f29f9ec416666"
     },
     "com.unity.2d.tilemap": {
       "version": "1.0.0",
@@ -210,6 +210,15 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.zigurous.animation": {
+      "version": "https://github.com/zigurous/unity-animation-library.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.inputsystem": "1.2.0"
+      },
+      "hash": "3b47bbeebff655dd4af0d6a524e15cb52849be55"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

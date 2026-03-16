@@ -75,15 +75,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Update()
-    {
+    // void Update()
+    // {
 
-        Debug.Log($"grounded? {_controller.isGrounded}");
-        // _currentState.Update();
+    //     // _currentState.Update();
 
-        // TranslationUpdate();
+    //     // TranslationUpdate();
 
-    }
+    // }
 
 
     private void TranslationUpdate()
