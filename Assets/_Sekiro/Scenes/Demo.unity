@@ -3844,7 +3844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b140c5d40574b65429ad0d15e40a34dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SekiroADF::EnemyAI
-  dataMap: {fileID: 0}
+  dataMap: {fileID: 11400000, guid: 366c073618754d74aae0dfb1cdd7c5c1, type: 2}
   recoverTime: 1.5
   weaponHitbox: {fileID: 3951229397112297672}
 --- !u!137 &2066896392353931297
