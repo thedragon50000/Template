@@ -2,8 +2,9 @@ using System;
 using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
+// using Zenject;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDamageable
 {
     public float moveSpeed = 5f;
     public Transform cameraTransform; // 拖入 Main Camera
@@ -113,5 +114,10 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.forward = Vector3.Slerp(transform.forward, moveDirection, 0.15f);
         }
+    }
+
+    public void TakeDamage(float atk)
+    {
+        throw new NotImplementedException();
     }
 }

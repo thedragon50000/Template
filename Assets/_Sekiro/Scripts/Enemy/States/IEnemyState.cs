@@ -1,4 +1,5 @@
-using UnityEngine;
+using System;
+using R3;
 
 public interface IEnemyState
 {
@@ -9,6 +10,13 @@ public interface IEnemyState
 
 public class MihariState : IEnemyState
 {
+    EnemyAI self;
+
+    public MihariState(EnemyAI enemy)
+    {
+        self = enemy;
+    }
+
     public void Enter()
     {
         // todo: 開啟視線、感應等collider
@@ -42,36 +50,30 @@ public class ChaseState : IEnemyState
     }
 }
 
-public class AttackState : IEnemyState
-{
-    public void Enter()
-    {
-        throw new System.NotImplementedException();
-    }
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
-    }
-
-}
-
 /// <summary>
 /// 硬直狀態
 /// </summary>
 public class RecoveryState : IEnemyState
 {
+    EnemyAI self;
+    public RecoveryState(EnemyAI enemy)
+    {
+        self = enemy;
+        
+    }
     public void Enter()
     {
-        throw new System.NotImplementedException();
+
+        Observable.Timer(TimeSpan.FromSeconds(self.recoverTime))
+        .Subscribe(_ =>
+            {
+                self.ChangeState(new MihariState(self));
+            }
+        );
     }
     public void Update()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Exit()

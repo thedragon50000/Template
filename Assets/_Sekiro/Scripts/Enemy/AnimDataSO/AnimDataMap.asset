@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1982f5e656816bb48af5140f1a937605, type: 3}
+  m_Name: AnimDataMap
+  m_EditorClassIdentifier: SekiroADF::AnimDataMap
+  states:
+  - stateName: Idle_Battle
+    hash: 1287177244
+    length: 1
+  - stateName: Attack01
+    hash: 1331344109
+    length: 0.8333334
+  - stateName: Attack02
+    hash: -699145385
+    length: 0.8333334
+  - stateName: Defend
+    hash: -1792453736
+    length: 1
+  - stateName: GetHit
+    hash: -1949373134
+    length: 0.8333334
+  - stateName: Dizzy
+    hash: -2012216193
+    length: 1.6666667
+  - stateName: Die
+    hash: 20298039
+    length: 1.1666667
+  - stateName: DieRecover
+    hash: -1152827101
+    length: 1.1666667
+  - stateName: RunForwardBattle
+    hash: 1539901533
+    length: 0.8000001
+  - stateName: WalkForwardBattle
+    hash: 2054890795
+    length: 1
