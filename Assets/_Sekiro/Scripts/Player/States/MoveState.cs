@@ -21,16 +21,33 @@ public class MoveState : IState
     {
     }
 
-    public void Exit() { }
+    public void Exit()
+    {
+        Debug.Log("exit moveState");
+    }
 
     public void HorizonInput(Vector2 moveInput)
     {
         _player.SetHorizontalMove(moveInput);
+        if (moveInput.sqrMagnitude < 0.01f)
+        {
+            _player.ChangeState(new IdleState(_player));
+        }
     }
 
     public void VerticalInput(Vector3 velocity)
     {
         _player.ChangeState(new JumpState(_player));
         _player.SetVerticalVelocity(velocity.y);
+    }
+
+    public void OnHitbyEnemy(float damage)
+    {
+        Debug.Log("移動中拉完了");
+    }
+
+    public void GuardInput()
+    {
+        _player.ChangeState(new ParryState(_player));
     }
 }

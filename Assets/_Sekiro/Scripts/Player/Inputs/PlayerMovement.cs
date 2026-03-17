@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 // using Zenject;
 
-public class PlayerMovement : MonoBehaviour, IDamageable
+public class PlayerMovement : baseCharacterAnimation, IDamageable
 {
     public float moveSpeed = 5f;
     public Transform cameraTransform; // 拖入 Main Camera
@@ -76,6 +76,14 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         }
     }
 
+    public void OnGuard(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Debug.Log("OnGuard press");
+            _currentState.GuardInput();
+        }
+    }
     // void Update()
     // {
 
@@ -116,8 +124,9 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(float atk)
+    public void CalculateDamage(float atk)
     {
-        throw new NotImplementedException();
+        Debug.Log("Player OnHit !");
+        _currentState.OnHitbyEnemy(atk);
     }
 }

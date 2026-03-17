@@ -10,6 +10,8 @@ public interface IState
     void HorizonInput(Vector2 moveInput);
     void VerticalInput(Vector3 velocity);
 
+    void OnHitbyEnemy(float damage);
+    void GuardInput();
 }
 
 public class IdleState : IState
@@ -46,5 +48,15 @@ public class IdleState : IState
             _player.ChangeState(new JumpState(_player));
             _player.SetVerticalVelocity(velocity.y);
         }
+    }
+
+    public void OnHitbyEnemy(float damage)
+    {
+        Debug.Log("站著拉完了");
+    }
+
+    public void GuardInput()
+    {
+        _player.ChangeState(new ParryState(_player));
     }
 }

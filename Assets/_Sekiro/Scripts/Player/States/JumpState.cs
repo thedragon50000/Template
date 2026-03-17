@@ -49,4 +49,14 @@ public class JumpState : IState
     public void VerticalInput(Vector3 velocity)
     {
     }
+
+    public void OnHitbyEnemy(float damage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void GuardInput()
+    {
+        throw new System.NotImplementedException();
+    }
 }

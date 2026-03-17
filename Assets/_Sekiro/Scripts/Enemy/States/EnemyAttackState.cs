@@ -39,6 +39,8 @@ public class EnemyAttackState : IEnemyState
                     .AddTo(_disposables); // 關鍵：綁定到狀態生命週期
             })
             .AddTo(_disposables);
+        Observable.Timer(TimeSpan.FromSeconds(delay + duration))
+        .Subscribe(_ => { self.ChangeState(new RecoveryState(self)); });
     }
 
     private void CheckHitbox()
@@ -49,7 +51,8 @@ public class EnemyAttackState : IEnemyState
             {
                 _hasHit.Add(hit);
                 // todo: 格檔與受傷的判斷中心。架開跟受傷非黑即白，一起處理才對
-
+                hit.GetComponent<PlayerMovement>().CalculateDamage(90);
+                Debug.Log($"砍了 {hit.name} 一刀");
                 // hit.GetComponent<IDamageable>()?.HandleCombatInteraction(_player);
             }
         });

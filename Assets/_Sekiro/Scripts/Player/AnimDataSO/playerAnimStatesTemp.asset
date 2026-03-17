@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1982f5e656816bb48af5140f1a937605, type: 3}
+  m_Name: playerAnimStatesTemp
+  m_EditorClassIdentifier: SekiroADF::AnimDataMap
+  states:
+  - stateName: idle01
+    hash: 1140807941
+    length: 1.9666668
+  - stateName: down02
+    hash: -1695214321
+    length: 0.8333334
+  - stateName: defense02
+    hash: -908647159
+    length: 0.70000005
+  - stateName: Parry
+    hash: 504284770
+    length: 0.7666667

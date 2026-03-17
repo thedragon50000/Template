@@ -27,10 +27,6 @@ public abstract class baseCharacterAnimation : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public virtual void AttackStateHandler()
-    {
-    }
-
     public void PlayAnimationFromState(string targetStateName)
     {
         AnimDataMap.StateData targetState = dataMap.states.Find(x => x.stateName == targetStateName);

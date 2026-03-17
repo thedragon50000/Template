@@ -56,29 +56,34 @@ public class ChaseState : IEnemyState
 public class RecoveryState : IEnemyState
 {
     EnemyAI self;
+    private CompositeDisposable _disposables = new();
+
     public RecoveryState(EnemyAI enemy)
     {
         self = enemy;
-        
+
     }
     public void Enter()
     {
-
+        self.RecoveryStateHandler();
         Observable.Timer(TimeSpan.FromSeconds(self.recoverTime))
         .Subscribe(_ =>
             {
-                self.ChangeState(new MihariState(self));
+                // self.ChangeState(new MihariState(self));
+
+                // todo: 暫定為休息完馬上砍，先做完傷害跟架開功能為優先
+                self.ChangeState(new EnemyAttackState(self, self.weaponHitbox, 0.3f, 0.5f));
             }
-        );
+        ).AddTo(_disposables);
     }
     public void Update()
     {
-        
+
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        _disposables.Dispose();
     }
 
 }

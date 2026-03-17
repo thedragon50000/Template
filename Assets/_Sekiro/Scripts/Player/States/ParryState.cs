@@ -27,21 +27,31 @@ public class ParryState : IState
             // 完美格檔時間結束
             perfectParry = false;
         });
+        Observable.Timer(TimeSpan.FromSeconds(1f)).Subscribe(_ =>
+        {
+            // 完美格檔時間結束
+            _player.ChangeState(new IdleState(_player));
+        });
     }
 
-    void OnEnemyHit()
+    public void OnHitbyEnemy(float damage)
     {
         if (perfectParry)
         {
             // todo: 完美格檔處理
+            Debug.Log("完美格檔，不拉");
         }
-
-        
+        else
+        {
+            Debug.Log("有點拉");
+        }
     }
 
     public void Update()
     {
+
     }
+
     public void Exit()
     {
         // 最重要的一步：離開狀態時，強制切斷所有流，防止舊狀態還在干擾
@@ -55,6 +65,10 @@ public class ParryState : IState
     }
 
     public void VerticalInput(Vector3 velocity)
+    {
+    }
+
+    public void GuardInput()
     {
     }
 }
