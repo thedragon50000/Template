@@ -14,20 +14,6 @@ namespace Unity.Cinemachine.Samples
 
         void Awake()
         {
-            // When the PlayerInput receives an input, send it to all the controllers
-            if (PlayerInput == null)
-                TryGetComponent(out PlayerInput);
-            if (PlayerInput == null)
-                Debug.LogError("Cannot find PlayerInput component");
-            else
-            {
-                PlayerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-                PlayerInput.onActionTriggered += (value) =>
-                {
-                    for (var i = 0; i < Controllers.Count; i++)
-                        Controllers[i].Input.ProcessInput(value.action);
-                };
-            }
         }
 
         // We process user input on the Update clock
