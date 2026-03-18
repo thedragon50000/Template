@@ -5159,7 +5159,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9179c270fbc55774d9f46ddba521bc3d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -6236,7 +6236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad3ee9682057bc4bbd8d29379cb2420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SekiroADF::PlayerMovement
-  dataMap: {fileID: 11400000, guid: 2dd93cced6521174fa6da1ec4e7383ff, type: 2}
+  dataMap: {fileID: 11400000, guid: d348b18c14d47374391d11c376117292, type: 2}
   moveSpeed: 5
   cameraTransform: {fileID: 1975568626}
 --- !u!1 &8011873243114755867

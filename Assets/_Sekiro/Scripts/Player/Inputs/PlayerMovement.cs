@@ -44,6 +44,7 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
 
     public void ChangeState(IState newState)
     {
+        Debug.Log($"new State: {newState}");
         _currentState?.Exit();
         _currentState = newState;
         _currentState.Enter();
@@ -124,9 +125,50 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         }
     }
 
-    public void CalculateDamage(float atk)
+    public void CalculateDamage(float enemyAtk)
     {
         Debug.Log("Player OnHit !");
-        _currentState.OnHitbyEnemy(atk);
+        _currentState.OnHitbyEnemy(enemyAtk);
+    }
+
+    public void DefendStateHandler()
+    {
+        PlayAnimationFromState("Defense02");
+    }
+
+    public void ParryHandler(bool perfect)
+    {
+        if (perfect)
+        {
+            PlayAnimationFromState("Parry");
+            ChangeState(new IdleState(this));
+        }
+        else
+        {
+            PlayAnimationFromState("Parry");
+            ChangeState(new StunnedState(this, 0.8f));
+        }
+    }
+
+    public void TakeDamageHandler(float damage)
+    {
+        if (damage > 50)
+        {
+            PlayAnimationFromState("Down02");
+
+            ChangeState(new StunnedState(this, 1f));
+
+        }
+        else
+        {
+            PlayAnimationFromState("hit_body");
+            ChangeState(new StunnedState(this, 0.5f));
+        }
+
+    }
+
+    public void IdleStateHandler()
+    {
+        PlayAnimationFromState("idle01");
     }
 }

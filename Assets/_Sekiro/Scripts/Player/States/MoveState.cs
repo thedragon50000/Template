@@ -2,31 +2,24 @@ using UnityEngine;
 
 public class MoveState : IState
 {
-    private PlayerMovement _player;
 
-    CharacterController _controller;
-
-    public MoveState(PlayerMovement player)
+    public MoveState(PlayerMovement player) : base(player)
     {
         _player = player;
         _controller = player.GetComponent<CharacterController>();
     }
 
-    public void Enter()
+    public override void Enter()
     {
-
+        Debug.Log("移動動畫loop");
     }
 
-    public void Update()
-    {
-    }
-
-    public void Exit()
+    public override void Exit()
     {
         Debug.Log("exit moveState");
     }
 
-    public void HorizonInput(Vector2 moveInput)
+    public override void HorizonInput(Vector2 moveInput)
     {
         _player.SetHorizontalMove(moveInput);
         if (moveInput.sqrMagnitude < 0.01f)
@@ -35,18 +28,18 @@ public class MoveState : IState
         }
     }
 
-    public void VerticalInput(Vector3 velocity)
+    public override void VerticalInput(Vector3 velocity)
     {
         _player.ChangeState(new JumpState(_player));
         _player.SetVerticalVelocity(velocity.y);
     }
 
-    public void OnHitbyEnemy(float damage)
+    public override void OnHitbyEnemy(float damage)
     {
-        Debug.Log("移動中拉完了");
+        _player.TakeDamageHandler(damage);
     }
 
-    public void GuardInput()
+    public override void GuardInput()
     {
         _player.ChangeState(new ParryState(_player));
     }

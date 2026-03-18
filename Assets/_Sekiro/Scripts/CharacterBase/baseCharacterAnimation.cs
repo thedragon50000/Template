@@ -32,7 +32,7 @@ public abstract class baseCharacterAnimation : MonoBehaviour
         AnimDataMap.StateData targetState = dataMap.states.Find(x => x.stateName == targetStateName);
         if (targetState == null)
         {
-            Debug.Log($"{gameObject.name}: 無此動畫state");
+            Debug.Log($"{gameObject.name}: there's no any state names {targetStateName}");
             return;
         }
 
@@ -46,14 +46,14 @@ public abstract class baseCharacterAnimation : MonoBehaviour
         if (info.shortNameHash == Animator.StringToHash(targetStateName))
         {
             if (bReapeatMoveLock) return;
-            Debug.Log("同動作重複");
+            // Debug.Log("同動作重複");
             _animator.Play(targetState.hash, 0, 0);
         }
         else
         {
             // todo: 銜接、過渡 的效果，先留著
             if (bPlayNextMoveLock) return;
-            Debug.Log("不同動作接技");
+            // Debug.Log("不同動作接技");
             // 播動畫
             _animator.CrossFade(targetState.hash, 0.1f);
         }
