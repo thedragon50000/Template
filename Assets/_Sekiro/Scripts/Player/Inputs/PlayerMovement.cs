@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -141,20 +142,33 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         if (perfect)
         {
             PlayAnimationFromState("Parry");
-            ChangeState(new IdleState(this));
+            BackOff(50);
+            ChangeState(new StunnedState(this, 0.3f));  // Note: 敵人攻擊間隔不能小於這個值，不然就不是格檔遊戲了
         }
         else
         {
             PlayAnimationFromState("Parry");
+            // todo: 有更大的硬直，累積失衡值（尚未實作）
+            BackOff(30);
             ChangeState(new StunnedState(this, 0.8f));
         }
     }
 
+    /// <summary>
+    /// 擊退、擊飛
+    /// </summary>
+    /// <param name="force"></param>
+    public void BackOff(float force)
+    {
+        _moveInput = Vector2.down * force;  // bug: 不能跟移動一起處理？
+    }
+
     public void TakeDamageHandler(float damage)
     {
-        if (damage > 50)
+        if (damage > 90)
         {
             PlayAnimationFromState("Down02");
+            cameraTransform.DOPunchPosition(cameraTransform.right, 0.3f);
 
             ChangeState(new StunnedState(this, 1f));
 
@@ -162,6 +176,7 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         else
         {
             PlayAnimationFromState("hit_body");
+            cameraTransform.DOPunchPosition(cameraTransform.right, 0.3f);
             ChangeState(new StunnedState(this, 0.5f));
         }
 

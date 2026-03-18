@@ -15,21 +15,40 @@ public class ParryState : IState
     public override void Enter()
     {
         _player.DefendStateHandler();
-        perfectParry = true;
-        Observable.Timer(TimeSpan.FromSeconds(0.2f)).Subscribe(_ =>
-        {
-            // 完美格檔時間結束
-            perfectParry = false;
-        }).AddTo(_disposables);
-        Observable.Timer(TimeSpan.FromSeconds(0.7f)).Subscribe(_ =>
-        {
-            // 完美格檔時間結束
-            _player.ChangeState(new IdleState(_player));
-        }).AddTo(_disposables);
+        perfectParry = false;
+
+        // 先等 0.2s 執行 A，再過 0.4s 執行 B
+        Observable.Timer(TimeSpan.FromSeconds(0.2f))
+            .Do(_ => perfectParry = true)
+            .Delay(TimeSpan.FromSeconds(0.2f))
+            .Do(_ => perfectParry = false)
+            .Delay(TimeSpan.FromSeconds(0.3f))
+            .Subscribe(_ =>
+            {
+                _player.ChangeState(new IdleState(_player));
+            })
+            .AddTo(_disposables);
+
+        // Observable.Timer(TimeSpan.FromSeconds(0.2f)).Subscribe(_ =>
+        // {
+        //     // 完美格檔時間結束
+        //     perfectParry = true;
+        // }).AddTo(_disposables);
+        // Observable.Timer(TimeSpan.FromSeconds(0.4f)).Subscribe(_ =>
+        // {
+        //     // 完美格檔時間結束
+        //     _player.ChangeState(new IdleState(_player));
+        // }).AddTo(_disposables);
     }
 
     public override void OnHitbyEnemy(float damage)
     {
         _player.ParryHandler(perfectParry);
+    }
+
+    public override void HorizonInput(Vector2 moveInput)
+    {
+        var direction = moveInput * 0.01f;
+        _player.SetHorizontalMove(direction);
     }
 }
