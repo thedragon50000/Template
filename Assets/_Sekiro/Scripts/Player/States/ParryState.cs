@@ -22,7 +22,7 @@ public class ParryState : IState
             .Do(_ => perfectParry = true)
             .Delay(TimeSpan.FromSeconds(0.2f))
             .Do(_ => perfectParry = false)
-            .Delay(TimeSpan.FromSeconds(0.3f))
+            .Delay(TimeSpan.FromSeconds(0.2f))
             .Subscribe(_ =>
             {
                 _player.ChangeState(new IdleState(_player));

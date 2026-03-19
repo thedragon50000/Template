@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : baseCharacterAnimation, IDamageable
 {
-    public float moveSpeed = 5f;
+    float moveSpeed = 5f;
+    float backOffSpeed = 1;
+    float isBackOffSpeed = 4;
+
     public Transform cameraTransform; // 拖入 Main Camera
     private CharacterController _controller;
     private Vector2 _moveInput;
@@ -114,7 +117,8 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         // 加上重力加速度
         _velocity.y += _gravity * Time.deltaTime;
 
-        var total = moveDirection * moveSpeed + _velocity;
+        // 被擊飛的時候 backOffSpeed 會變大，也就是會加速
+        var total = moveDirection * moveSpeed * backOffSpeed + _velocity;
 
         // 移動角色
         _controller.Move(total * Time.deltaTime);
@@ -122,7 +126,14 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         // 角色轉向移動方向
         if (moveDirection != Vector3.zero)
         {
-            transform.forward = Vector3.Slerp(transform.forward, moveDirection, 0.15f);
+            if (backOffSpeed == 1)
+            {
+                transform.forward = Vector3.Slerp(transform.forward, moveDirection, 0.15f);
+            }
+            else
+            {
+                transform.forward = -moveDirection;
+            }
         }
     }
 
@@ -142,14 +153,14 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         if (perfect)
         {
             PlayAnimationFromState("Parry");
-            BackOff(50);
+            BackOff(4, 0.2f);
             ChangeState(new StunnedState(this, 0.3f));  // Note: 敵人攻擊間隔不能小於這個值，不然就不是格檔遊戲了
         }
         else
         {
             PlayAnimationFromState("Parry");
             // todo: 有更大的硬直，累積失衡值（尚未實作）
-            BackOff(30);
+            BackOff(3, 0.2f);
             ChangeState(new StunnedState(this, 0.8f));
         }
     }
@@ -158,9 +169,19 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
     /// 擊退、擊飛
     /// </summary>
     /// <param name="force"></param>
-    public void BackOff(float force)
+    public void BackOff(float force, float delay)
     {
-        _moveInput = Vector2.down * force;  // bug: 不能跟移動一起處理？
+        _moveInput = Vector2.down * force;
+
+        Observable.Return(Unit.Default).Do(
+        _ => backOffSpeed = force)
+        .Delay(TimeSpan.FromSeconds(delay)).Subscribe(_ =>
+        {
+            backOffSpeed = 1;
+            _moveInput = Vector2.zero;
+        }
+        );
+
     }
 
     public void TakeDamageHandler(float damage)

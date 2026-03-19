@@ -74,6 +74,7 @@ public class IdleState : IState
 
     public override void GuardInput()
     {
+        Debug.Log("idle進防守");
         _player.ChangeState(new ParryState(_player));
     }
 }
