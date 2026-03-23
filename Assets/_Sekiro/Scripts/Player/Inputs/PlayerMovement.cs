@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using R3;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+// using 
 // using Zenject;
 
 public class PlayerMovement : baseCharacterAnimation, IDamageable
@@ -20,6 +24,8 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
     private float _gravity = -9.81f; // 自定義重力
     private float jumpForce = 8;
 
+    // public CinemachineCamera lockCamera;
+    public CinemachineClearShot clearShot;
     // ReactiveProperty<float> atkPoint;
 
     private IState _currentState;
@@ -89,6 +95,40 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
             _currentState.GuardInput();
         }
     }
+
+    public void OnLock(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("OnLock press");
+
+        if (ctx.performed)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, 10);
+
+            if (hits.Length == 0)
+            {
+                Debug.Log("附近沒有敵人");
+                return;
+            }
+
+            Collider t = hits.Cast<Collider>().ToArray().FirstOrDefault(x => x.tag == "Enemy");
+            if (t != null)
+            {
+                SetLockTarget(hits[0]);
+            }
+            else
+            {
+                Debug.Log("附近有人但沒有敵人");
+            }
+        }
+    }
+
+    private void SetLockTarget(Collider collider)
+    {
+        clearShot.Priority = 10;
+        CinemachineCamera c = clearShot.ChildCameras[0] as CinemachineCamera;
+        c.Target.TrackingTarget = collider.transform;
+    }
+
     // void Update()
     // {
 
@@ -197,7 +237,7 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         else
         {
             PlayAnimationFromState("hit_body");
-            cameraTransform.DOPunchPosition(cameraTransform.right, 0.3f);
+            cameraTransform.DOPunchPosition(cameraTransform.right * 50, 0.3f);
             ChangeState(new StunnedState(this, 0.5f));
         }
 

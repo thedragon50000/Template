@@ -26,7 +26,7 @@ public class LockCameraPosition : MonoBehaviour
         Vector3 AB = B - A;
 
         // 2. 旋轉 AB 向量 15 度
-        float y = isInvert ? -15 : 15;
+        float y = isInvert ? -15 : 3;
         Vector3 rotatedVector = Quaternion.Euler(0, y, 0) * AB;
 
         // 3. 縮放長度為原來的 cos(15°) 倍

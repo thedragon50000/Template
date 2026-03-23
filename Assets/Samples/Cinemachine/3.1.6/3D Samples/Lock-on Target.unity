@@ -315,8 +315,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8092338047870882072}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.037952796, y: 0.0000000021492599, z: -8.1629224e-11, w: 0.99927956}
-  m_LocalPosition: {x: 0, y: 2.25, z: -29}
+  m_LocalRotation: {x: 0.05393488, y: -0.000000007752356, z: 4.1873185e-10, w: 0.9985445}
+  m_LocalPosition: {x: 0.000000017440017, y: 2.390385, z: -28.995472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -417,8 +417,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
         Gain: 1
-        LegacyInput: Mouse X
-        LegacyGain: 50
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -430,8 +428,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
         Gain: -1
-        LegacyInput: Mouse Y
-        LegacyGain: -50
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -443,8 +439,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 5082991133974614888, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
         Gain: -1
-        LegacyInput: Mouse ScrollWheel
-        LegacyGain: -50
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -777,7 +771,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 0
+    Value: -0.0000002500929
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -787,7 +781,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 17.5
+    Value: 18.477375
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -814,8 +808,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078580211717707444}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.037952796, y: 0.0000000021492603, z: -8.162924e-11, w: 0.99927956}
-  m_LocalPosition: {x: 0, y: 2.25, z: -29}
+  m_LocalRotation: {x: 0.053934883, y: -0.000000007752356, z: 4.1873188e-10, w: 0.99854445}
+  m_LocalPosition: {x: 0.000000017440017, y: 2.390385, z: -28.995472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -955,7 +949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
