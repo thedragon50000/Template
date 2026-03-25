@@ -6,6 +6,7 @@ using R3;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 // using 
 // using Zenject;
 
@@ -30,12 +31,55 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
 
     private IState _currentState;
 
+    [Inject]    // Warning: Zenject not installed yet.
+    LockCameraPosition lockCameraPosition;
+
+    private bool _lockingMode = false;
+
+    public bool LockingMode
+    {
+        get => _lockingMode;
+        private set
+        {
+            if (_lockingMode == value) return;
+
+            var p = value == true ? 10 : 0;
+            _lockingMode = value;
+
+            clearShot.Priority = p;
+        }
+    }
+    // 鎖定的對象
+    public ReactiveProperty<Collider> Target = new(null);
+
+
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
     }
     void Start()
     {
+        // 當 Target 變動時觸發
+        Target.Subscribe(newTarget =>
+        {
+            // CinemachineCamera c = clearShot.ChildCameras[0] as CinemachineCamera;
+            // c.Target.TrackingTarget = collider.transform;
+            if (newTarget == null)
+            {
+                Debug.Log("目標遺失，停止鎖定邏輯");
+
+                lockCameraPosition.target = null;
+
+                LockingMode = false;
+            }
+            else
+            {
+                Debug.Log($"瞄準新目標: {newTarget.name}");
+                lockCameraPosition.target = newTarget.transform;
+                LockingMode = true;
+            }
+        });
+
         // 將傳統 Update 轉為響應式流
         Observable.EveryUpdate(destroyCancellationToken)
             .Subscribe(_ =>
@@ -102,21 +146,47 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
 
         if (ctx.performed)
         {
+            if (LockingMode)
+            {
+                // 已在鎖定中就解除
+                LockingMode = false;
+                return;
+            }
+
             Collider[] hits = Physics.OverlapSphere(transform.position, 10);
 
             if (hits.Length == 0)
             {
+                LockingMode = false;
                 Debug.Log("附近沒有敵人");
                 return;
             }
 
-            Collider t = hits.Cast<Collider>().ToArray().FirstOrDefault(x => x.tag == "Enemy");
-            if (t != null)
+            // 1. 先把所有的敵人撈出來並按距離排序（只做一次）
+            var allEnemies = hits
+                .Where(h => h.CompareTag("Enemy"))
+                .OrderBy(h => (h.transform.position - transform.position).sqrMagnitude) // 使用 sqrMagnitude 比 Distance 快，因為不用開根號
+                .ToList();
+
+            // 過濾出角色前方 150 度內的敵人
+            Collider validEnemy = allEnemies.FirstOrDefault(h =>
+                Vector3.Angle(transform.forward, h.transform.position - transform.position) < 75f);
+
+            if (validEnemy == null)
             {
-                SetLockTarget(hits[0]);
+                // 退而求次找範圍內的
+                validEnemy = allEnemies.FirstOrDefault();
+            }
+
+            if (validEnemy != null)
+            {
+                LockingMode = true;
+                SetLockTarget(validEnemy);
             }
             else
             {
+                LockingMode = false;
+                SetLockTarget(null);
                 Debug.Log("附近有人但沒有敵人");
             }
         }
@@ -124,9 +194,7 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
 
     private void SetLockTarget(Collider collider)
     {
-        clearShot.Priority = 10;
-        CinemachineCamera c = clearShot.ChildCameras[0] as CinemachineCamera;
-        c.Target.TrackingTarget = collider.transform;
+        Target.Value = collider;
     }
 
     // void Update()

@@ -16,6 +16,10 @@ public class LockCameraPosition : MonoBehaviour
     {
         Observable.EveryUpdate(UnityFrameProvider.PreLateUpdate, destroyCancellationToken).Subscribe(_ =>
         {
+            if (target == null)
+            {
+                return;
+            }
             transform.position = GetRotatedCPoint(target.position, player.position);
             transform.LookAt(target.position);
         });
