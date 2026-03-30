@@ -62,8 +62,6 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
         // 當 Target 變動時觸發
         Target.Subscribe(newTarget =>
         {
-            // CinemachineCamera c = clearShot.ChildCameras[0] as CinemachineCamera;
-            // c.Target.TrackingTarget = collider.transform;
             if (newTarget == null)
             {
                 Debug.Log("目標遺失，停止鎖定邏輯");
@@ -76,6 +74,10 @@ public class PlayerMovement : baseCharacterAnimation, IDamageable
             {
                 Debug.Log($"瞄準新目標: {newTarget.name}");
                 lockCameraPosition.target = newTarget.transform;
+
+                CinemachineCamera c = clearShot.ChildCameras[0] as CinemachineCamera;
+                c.Target.TrackingTarget = newTarget.transform;
+                
                 LockingMode = true;
             }
         });

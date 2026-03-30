@@ -34,7 +34,9 @@ public class LockCameraPosition : MonoBehaviour
         Vector3 rotatedVector = Quaternion.Euler(0, y, 0) * AB;
 
         // 3. 縮放長度為原來的 cos(15°) 倍
-        float scale = Mathf.Cos(15f * Mathf.Deg2Rad) * 1.5f;
+        // float scale = Mathf.Cos(15f * Mathf.Deg2Rad) * 1.5f;
+        float scale = Mathf.Cos(0f * Mathf.Deg2Rad) * 1.5f;
+        
         // Vector3 C = A + (rotatedVector * scale) + Vector3.up * 2;
         float distance = Vector3.Distance(A, B);
         float positionY = Mathf.Lerp(0, 2, distance / 2) + 1;
