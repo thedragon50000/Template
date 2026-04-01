@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "NavMeshExample",
+    "maps": [
+        {
+            "name": "examples",
+            "id": "50bc6475-7564-4b65-af37-12bc073d688c",
+            "actions": [
+                {
+                    "name": "Mouse0 Click",
+                    "type": "Button",
+                    "id": "0a25d64a-1a9d-45bf-8cba-bf0e3baee427",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed64b33b-6167-4331-9dfa-ddcb4f26043b",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse0 Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

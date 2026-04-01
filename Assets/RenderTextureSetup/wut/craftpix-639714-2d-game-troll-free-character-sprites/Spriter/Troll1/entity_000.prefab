@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 462602835641630554}
   - component: {fileID: 4019391879596250704}
-  - component: {fileID: 3579483094180344488}
+  - component: {fileID: 428464014423584409}
   m_Layer: 0
   m_Name: troll_0010_left-feet
   m_TagString: Untagged
@@ -183,7 +183,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &3579483094180344488
+--- !u!114 &428464014423584409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -664,7 +664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5629630458661551310}
   - component: {fileID: 6235410995180489968}
-  - component: {fileID: 4150407380931585460}
+  - component: {fileID: 1693090563466070486}
   m_Layer: 0
   m_Name: troll_0014_left-feet
   m_TagString: Untagged
@@ -746,7 +746,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4150407380931585460
+--- !u!114 &1693090563466070486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
