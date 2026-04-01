@@ -1,52 +1,48 @@
 using System;
+using System.Threading;
 using R3;
 
-public interface IEnemyState
+public abstract class IEnemyState
 {
-    void Enter();
-    void Update();
-    void Exit();
-}
+    protected EnemyAI self;
 
-public class MihariState : IEnemyState
-{
-    EnemyAI self;
+    protected CompositeDisposable _disposables = new();
 
-    public MihariState(EnemyAI enemy)
+    public IEnemyState(EnemyAI enemy)
     {
         self = enemy;
     }
 
-    public void Enter()
+    public virtual void Enter()
+    {
+
+    }
+    protected virtual void Update()
+    {
+
+    }
+    public virtual void Exit()
+    {
+        _disposables.Dispose();
+    }
+}
+
+public class MihariState : IEnemyState
+{
+
+    public MihariState(EnemyAI enemy) : base(enemy)
+    {
+    }
+
+    public override void Enter()
     {
         // todo: 開啟視線、感應等collider
         throw new System.NotImplementedException();
     }
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public void Exit()
+    public override void Exit()
     {
-        throw new System.NotImplementedException();
-    }
-}
-
-public class ChaseState : IEnemyState
-{
-    public void Enter()
-    {
-        throw new System.NotImplementedException();
-    }
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
+        base.Exit();
     }
 }
 
@@ -56,14 +52,13 @@ public class ChaseState : IEnemyState
 public class RecoveryState : IEnemyState
 {
     EnemyAI self;
-    private CompositeDisposable _disposables = new();
 
-    public RecoveryState(EnemyAI enemy)
+    public RecoveryState(EnemyAI enemy) : base(enemy)
     {
         self = enemy;
 
     }
-    public void Enter()
+    public override void Enter()
     {
         self.RecoveryStateHandler();
         Observable.Timer(TimeSpan.FromSeconds(self.recoverTime))
@@ -76,14 +71,10 @@ public class RecoveryState : IEnemyState
             }
         ).AddTo(_disposables);
     }
-    public void Update()
-    {
 
-    }
-
-    public void Exit()
+    public override void Exit()
     {
-        _disposables.Dispose();
+        base.Exit();
     }
 
 }

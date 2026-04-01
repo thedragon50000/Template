@@ -6,22 +6,19 @@ using R3;
 
 public class EnemyAttackState : IEnemyState
 {
-    private EnemyAI self;
     private WeaponHitbox _hitbox; // 攻擊時會用到的判定器
     private HashSet<Collider> _hasHit = new(); // 確保一招只打中一次
-    private CompositeDisposable _disposables = new();
     private float _delay;
     private float _duration;
 
-    public EnemyAttackState(EnemyAI enemy, WeaponHitbox hitbox, float delay, float duration)
+    public EnemyAttackState(EnemyAI enemy, WeaponHitbox hitbox, float delay, float duration) : base(enemy)
     {
-        self = enemy;
         _hitbox = hitbox;
         _delay = delay;
         _duration = duration;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         self.AttackStateHandler();
         StartAttackLogic(_delay, _duration);
@@ -58,13 +55,9 @@ public class EnemyAttackState : IEnemyState
         });
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        _disposables.Dispose();
+        base.Exit();
         _hasHit.Clear(); // 離開狀態時清空命中清單，為下一招做準備
-    }
-
-    public void Update()
-    {
     }
 }
