@@ -7,5 +7,6 @@ public class SekiroInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInstance(lockCameraPosition);
+        Container.BindInterfacesAndSelfTo<PlayerMovement>().FromComponentInHierarchy().AsSingle();
     }
 }

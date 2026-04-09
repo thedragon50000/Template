@@ -7,8 +7,6 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
-// using 
-// using Zenject;
 
 public class PlayerMovement : baseCharacterAnimation, IDamageable
 {
