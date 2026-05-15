@@ -24,8 +24,13 @@ public class EnemyChaseState : IEnemyState
     {
         Observable.Interval(TimeSpan.FromSeconds(0.2f)).Subscribe(_ =>
         {
+            var o = self.transform.position;
             if (_target != null)
             {
+                if (Vector3.Distance(_target.position, o) <= 2)
+                {
+                    self.ChangeState(new StandoffState(self));
+                }
                 agent.SetDestination(_target.position);
             }
             else

@@ -27,19 +27,31 @@ public class StandoffState : IEnemyState
         Observable.Timer(TimeSpan.FromSeconds(_standoffDuration))
             .Subscribe(_ => DecideNextMove())
             .AddTo(_disposables);
+
+        Observable.EveryUpdate().Subscribe(_ =>
+        {
+            SmoothLookAtPlayer();
+
+            // 2. 緩慢橫移邏輯 (使用 transform.Translate 或 agent.Move)
+            Vector3 strafeVec = self.transform.right * _strafeDirection * 1.5f * Time.deltaTime;
+            self.transform.position += strafeVec;
+
+            // 3. 更新動畫 (傳遞橫移速度給 Animator)
+            self.StandoffStateHandler();
+        });
     }
 
-    protected override void Update()
-    {
-        SmoothLookAtPlayer();
+    // protected override void Update()
+    // {
+    //     SmoothLookAtPlayer();
 
-        // 2. 緩慢橫移邏輯 (使用 transform.Translate 或 agent.Move)
-        Vector3 strafeVec = self.transform.right * _strafeDirection * 1.5f * Time.deltaTime;
-        self.transform.position += strafeVec;
+    //     // 2. 緩慢橫移邏輯 (使用 transform.Translate 或 agent.Move)
+    //     Vector3 strafeVec = self.transform.right * _strafeDirection * 1.5f * Time.deltaTime;
+    //     self.transform.position += strafeVec;
 
-        // 3. 更新動畫 (傳遞橫移速度給 Animator)
-        self.StandoffStateHandler();
-    }
+    //     // 3. 更新動畫 (傳遞橫移速度給 Animator)
+    //     self.StandoffStateHandler();
+    // }
 
 
     private void DecideNextMove()
